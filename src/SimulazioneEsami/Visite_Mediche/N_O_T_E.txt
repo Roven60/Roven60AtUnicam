@@ -1,0 +1,29 @@
+Si vuole gestire un sistema di prenotazione di visite mediche. Il sistema
+prevede la possibilitÃ  di prenotarsi indicando nome e cognome.
+
+Definire la classe Visita caratterizzata da due attributo di tipo
+String nome e cognome.
+Definire il costruttore con due parametri: nome, cognome che genera
+un'eccezione se nome o cognome sono nulli o stringhe con meno di due
+caratteri.
+
+Definire la classe Coda che permette di inserire oggetti di tipo Visita.
+La classe Coda Ã¨ caratterizzata da un attributo
+coda di tipo array di Visita e da un intero indicante il numero di pazienti
+prenotatati dal costruttore con un parametro intero indicante
+il numero massimo di elementi di tipo Visita gestiti. Viene generata un'eccezione
+se il parametro Ã¨ negativo.
+
+Definire quindi il metodo boolean inserimento(Visita v) che inserisce una visita
+in fondo alla coda e produce true se ha successo. Il metodo non effettua alcuna
+prenotazione e produce false se il numero di visite eccede il numero di posti
+disponibili.
+
+Definire il metodo Visita estrazione() che preleva e cancella il primo elemento
+della coda. Il metodo produce null se non vi sono elementi
+
+Definire il metodo boolean cancella(String nome, String cognome) per cancellare
+la prenotazione di una visita che abbia come paziente un utente con nome e cognome.
+Tale metodo camcella la visita ma mantiene l'ordine presente delle prenotazioni
+compattando gli elementi presenti nell'array coda.
+
