@@ -4,11 +4,8 @@ import java.util.Arrays;
 
 public class Cap_12_Permutazioni {
   /*
-    Materia: Programmazione - Docente: Loreti Michele
     Esercizio per il 03/11/2025
    */
-
-  static int ENNE = 4;
 
   // Restituisce l'array fornito, con l'elemento k inserito in poszione i //
   static int[] inserisci(int k, int[] a, int i) {
@@ -36,7 +33,7 @@ public class Cap_12_Permutazioni {
   }
 
   static void main(String[] args) {
-    int[][] res = permutazioni(ENNE);
+    int[][] res = permutazioni(4);
     for (int i = 0; i < res.length; i++) {
       System.out.println(Arrays.toString(res[i]));
     }
