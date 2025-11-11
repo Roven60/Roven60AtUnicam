@@ -223,7 +223,7 @@ public class Mastermind_Singola_Classe {
   }
 
   static String getRandomTry() {
-    System.out.print("allTries.length=" + allTries.length +"   ");
+    if (DEBUGPCLOGIC) System.out.print("allTries.length=" + allTries.length +"   ");
     if (allTries.length < 1) {
       println();
       println("************************************");
