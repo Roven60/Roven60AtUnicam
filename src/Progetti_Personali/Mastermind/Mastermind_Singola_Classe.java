@@ -12,7 +12,7 @@ public class Mastermind_Singola_Classe {
   static final int ROUNDS = 20; //max number of round to guess the code
 
   static boolean DEBUGMODE = false;
-  static boolean DEBUGPCLOGIC = false; //if true focus is on computer logic: human answer are simulated
+  static boolean DEBUGPCLOGIC = true; //if true focus is on computer logic: human answer are simulated
 
   static final String VICTORYOUTCOME = "**********".substring(0, NUMHOLES);
   static final String USRPROMPT = "Codice (" + NUMHOLES + " caratteri " + Arrays.toString(COLORS) + "): ";
@@ -223,7 +223,7 @@ public class Mastermind_Singola_Classe {
   }
 
   static String getRandomTry() {
-    if (DEBUGPCLOGIC) System.out.print("allTries.length=" + allTries.length +"   ");
+    if (DEBUGPCLOGIC) System.out.print("allTries.length=" + allTries.length + "   ");
     if (allTries.length < 1) {
       println();
       println("************************************");
@@ -254,7 +254,7 @@ public class Mastermind_Singola_Classe {
         validTries--;
       }
     }
-    if (validTries <1) {
+    if (validTries < 1) {
       validTries = 0;
     }
     // second pass collect only valid tries
@@ -291,7 +291,7 @@ public class Mastermind_Singola_Classe {
     }
   }
 
-  static void partita() {
+  static int partita() {
     setUp();
     String usrSpacer = "                    ".substring(0, NUMHOLES * 2 + 2);
     String mySpacer = "                                                        ".substring(0, USRPROMPT.length() + NUMHOLES + 4);
@@ -324,6 +324,7 @@ public class Mastermind_Singola_Classe {
       round++;
     }
     println("===========================");
+    return round + 1;
   }
 
   /*
@@ -353,8 +354,16 @@ public class Mastermind_Singola_Classe {
 //    setUp();
 //    println(Math.pow(COLORSNUM, NUMHOLES) + " " + Arrays.toString(allTries));
 //    println(allTries.length + " " + Arrays.toString(allTries));
-
-    partita();
+    int somma = 0;
+    int min = 99;
+    int max =0;
+    for (int i = 1; i <= 1000; i++) {
+      int tentativi = partita();
+      somma += tentativi;
+      min = Math.min(min, tentativi);
+      max = Math.max(max, tentativi);
+    }
+    println("Su 1000 partite ho indovinato mediamente in " + (somma / 1000) + " tentativi; min " + min + " max " + max);
   }
 
 
