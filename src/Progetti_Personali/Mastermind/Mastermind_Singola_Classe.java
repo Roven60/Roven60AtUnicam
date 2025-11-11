@@ -12,7 +12,7 @@ public class Mastermind_Singola_Classe {
   static final int ROUNDS = 20; //max number of round to guess the code
 
   static boolean DEBUGMODE = false;
-  static boolean DEBUGPCLOGIC = true; //if true focus is on computer logic: human answer are simulated
+  static boolean DEBUGPCLOGIC = false; //if true focus is on computer logic: human answer are simulated
 
   static final String VICTORYOUTCOME = "**********".substring(0, NUMHOLES);
   static final String USRPROMPT = "Codice (" + NUMHOLES + " caratteri " + Arrays.toString(COLORS) + "): ";
@@ -144,33 +144,42 @@ public class Mastermind_Singola_Classe {
       return;
     //only for standar game we try a strategy
     int type = (int) (Math.random() * 4);  //type of initial strategy
-    int i1 = (int) (Math.random() * COLORSNUM);
-    int i2 = i1;
+    int i1, i2, i3, i4;
+    i1 = (int) (Math.random() * COLORSNUM);
+    i2 = i1;
     while (i2 == i1)
       i2 = (int) (Math.random() * COLORSNUM);
-    int i3 = i1;
+    i3 = i1;
     while (i3 == i1 || i3 == i2)
       i3 = (int) (Math.random() * COLORSNUM);
-    int i4 = i1;
+    i4 = i1;
     while (i4 == i1 || i4 == i2 || i4 == i3)
       i4 = (int) (Math.random() * COLORSNUM);
-    // now we have 4 different pegs to try
+    // now we have 2 couples (of 4 different pegs) to try
     switch (type) {
       case 0:
-        myTries[0] = "" + COLORS[i1] + COLORS[i1] + COLORS[i2] + COLORS[i2];
-        myTries[1] = "" + COLORS[i3] + COLORS[i4] + COLORS[i4] + COLORS[i3];
+        myTries[0] = "" + COLORS[i1] + COLORS[i1] + COLORS[i2] + COLORS[i2];//11 22
+        myTries[1] = "" + COLORS[i3] + COLORS[i4] + COLORS[i4] + COLORS[i3];//3 44 3
         break;
       case 1:
-        myTries[0] = "" + COLORS[i1] + COLORS[i2] + COLORS[i2] + COLORS[i1];
-        myTries[1] = "" + COLORS[i3] + COLORS[i3] + COLORS[i4] + COLORS[i4];
+        myTries[0] = "" + COLORS[i1] + COLORS[i1] + COLORS[i2] + COLORS[i2];//11 22
+        myTries[1] = "" + COLORS[i3] + COLORS[i4] + COLORS[i3] + COLORS[i4];//3 4 3 4
         break;
       case 2:
-        myTries[0] = "" + COLORS[i1] + COLORS[i2] + COLORS[i1] + COLORS[i2];
-        myTries[1] = "" + COLORS[i3] + COLORS[i4] + COLORS[i4] + COLORS[i3];
+        myTries[0] = "" + COLORS[i1] + COLORS[i2] + COLORS[i1] + COLORS[i2];//1 2 1 2
+        myTries[1] = "" + COLORS[i3] + COLORS[i4] + COLORS[i4] + COLORS[i3];//3 44 3
         break;
       case 3:
-        myTries[0] = "" + COLORS[i1] + COLORS[i2] + COLORS[i1] + COLORS[i2];
-        myTries[1] = "" + COLORS[i3] + COLORS[i3] + COLORS[i4] + COLORS[i4];
+        myTries[0] = "" + COLORS[i1] + COLORS[i2] + COLORS[i1] + COLORS[i2];//1 2 1 2
+        myTries[1] = "" + COLORS[i3] + COLORS[i3] + COLORS[i4] + COLORS[i4];//33 44
+        break;
+      case 4:
+        myTries[0] = "" + COLORS[i1] + COLORS[i2] + COLORS[i1] + COLORS[i2];//1 22 1
+        myTries[1] = "" + COLORS[i3] + COLORS[i3] + COLORS[i4] + COLORS[i4];//33 44
+        break;
+      case 5:
+        myTries[0] = "" + COLORS[i1] + COLORS[i2] + COLORS[i2] + COLORS[i1];//1 22 1
+        myTries[1] = "" + COLORS[i3] + COLORS[i4] + COLORS[i3] + COLORS[i4];//3 4 3 4
         break;
     }
   }
@@ -277,15 +286,10 @@ public class Mastermind_Singola_Classe {
         //else
         return getRandomTry();
       case 1:
-        if (myOutcomes[0].length() < 4) {
-          if (myTries[1] != null)
-            return myTries[1];
-          // else
-          return getRandomTry();
-        } else {
-          println("Abbiamo i colori ma non in giusta posizione");
-          return getRandomTry();
-        }
+        if (myOutcomes[0].length() < 4 && myTries[1] != null)
+          return myTries[1];
+        //else
+        return getRandomTry();
       default:
         return getRandomTry();
     }
@@ -354,16 +358,27 @@ public class Mastermind_Singola_Classe {
 //    setUp();
 //    println(Math.pow(COLORSNUM, NUMHOLES) + " " + Arrays.toString(allTries));
 //    println(allTries.length + " " + Arrays.toString(allTries));
-    int somma = 0;
-    int min = 99;
-    int max =0;
+
+    partita();  //--- ONLY THIS METHOD TO PLAY (remember to set debugPcLogic to false)
+
+    /*
+    //-- How much tries to guess the code: let's do statistics
+    int four = 0;
+    int five = 0;
+    int less = 0;
+    int more = 0;
     for (int i = 1; i <= 1000; i++) {
       int tentativi = partita();
-      somma += tentativi;
-      min = Math.min(min, tentativi);
-      max = Math.max(max, tentativi);
+      less += (tentativi < 4 ? 1 : 0);
+      four += (tentativi == 4 ? 1 : 0);
+      five += (tentativi == 5 ? 1 : 0);
+      more += (tentativi > 5 ? 1 : 0);
     }
-    println("Su 1000 partite ho indovinato mediamente in " + (somma / 1000) + " tentativi; min " + min + " max " + max);
+    println("Su 1000 partite ho indovinato in:\n"
+        + "per il " + ((float) less / 10) + " % in meno di 4\n"
+        + "per il " + ((float) (four+five) / 10) + " % in 4 o 5 mosse;\n"
+        + "per il " + ((float) more / 10) + " % in più di 5");
+    */
   }
 
 
