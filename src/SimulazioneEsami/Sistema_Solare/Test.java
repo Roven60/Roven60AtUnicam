@@ -5,11 +5,16 @@ public class Test {
     SistemaSolare s = new SistemaSolare(8);
     test(s.nuovo(null), false);
     test(s.nuovo(new Pianeta("Terra", 1, 1)), true);
+    System.out.println(s.toString());
     test(s.nuovo(new Pianeta("Venere", 0.86, 0.72)), true);
+    System.out.println(s.toString());
     test(s.nuovo(new Pianeta("Mercurio", 0.06, 0.39)), true);
+    System.out.println(s.toString());
     test(s.getNumero(), 3);
     test(s.nuovo(new Pianeta("Giove", 317.83, 5.2)), true);
+    System.out.println(s.toString());
     test(s.nuovo(new Pianeta("Marte", 0.11, 1.52)), true);
+    System.out.println(s.toString());
     test(s.getMaxPianeta().getNome(), "Giove");
     test(s.getPianeta(0).getNome(), "Mercurio");
     test(s.getPianeta(2).getNome(), "Terra");

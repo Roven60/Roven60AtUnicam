@@ -67,10 +67,27 @@ public class SistemaSolare {
   }
 
 
-  @Override
+  /*
+    I 2 metodi seguenti sono stati aggiunti per puro sfizio.
+    Mi è chiaro che, in base a dove verrà utilizzato questo "pacchetto", potrà essere opportuno rimuoverlo
+    per non appesantire il codice nel caso di ambienti con poca memoria.
+   */
   public String toString() {
-    String res = "";
+    return toString(80);
+  }
 
+  public String toString(int cols) {
+    char[] chars = new char[cols];
+    chars[0] = 'S';
+    for (int i = 1; i < cols; i++) {
+      chars[i] = '.';
+    }
+    double maxDistanza = pianeti[pianetiPresenti - 1].getDistanza();
+    for (int i = 0; i < pianetiPresenti; i++) {
+      int col = (int) Math.round(pianeti[i].getDistanza() * 80 / maxDistanza);
+      chars[col - 1] = pianeti[i].getNome().charAt(0);
+    }
+    String res = new String(chars);
     return res;
   }
 
