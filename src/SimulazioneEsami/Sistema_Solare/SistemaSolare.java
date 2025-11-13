@@ -77,17 +77,20 @@ public class SistemaSolare {
   }
 
   public String toString(int cols) {
+    cols -= pianeti[pianetiPresenti - 1].getNome().length();
     char[] chars = new char[cols];
     chars[0] = 'S';
     for (int i = 1; i < cols; i++) {
       chars[i] = '.';
     }
     double maxDistanza = pianeti[pianetiPresenti - 1].getDistanza();
+    String res = "";
     for (int i = 0; i < pianetiPresenti; i++) {
-      int col = (int) Math.round(pianeti[i].getDistanza() * 80 / maxDistanza);
+      int col = (int) Math.round(pianeti[i].getDistanza() * cols / maxDistanza);
       chars[col - 1] = pianeti[i].getNome().charAt(0);
+      res += " ".repeat(col - 1) + pianeti[i].getNome() + "\r\n";
     }
-    String res = new String(chars);
+    res = new String(chars) + "\r\n" + res;
     return res;
   }
 
