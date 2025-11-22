@@ -1,8 +1,6 @@
 package Lezioni;
 
-import Progetti_Personali._RvLib;
-
-public class Slide_13_ClassiOggetti {
+public class Cap_13_ClassiOggetti {
 
   public static class Orologio {
     int ore = 0;
