@@ -14,7 +14,7 @@ public class Test {
     test(s.getPianeta(0).getNome(), "Mercurio");
     test(s.getPianeta(2).getNome(), "Terra");
 
-    System.out.println(s.toString());
+    System.out.println(s.toGraph());
   }
 
   private static int t = 0;

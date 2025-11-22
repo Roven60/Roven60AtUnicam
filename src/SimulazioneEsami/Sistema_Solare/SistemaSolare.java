@@ -1,10 +1,17 @@
 package SimulazioneEsami.Sistema_Solare;
 
+/**
+ * @author Roberto Venturi aka Roven60
+ */
 public class SistemaSolare {
 
   Pianeta[] pianeti;
   int pianetiPresenti;
 
+  /**
+   *
+   * @param numPianeti numero massimo dei pianeti presenti nel sistema solare
+   */
   public SistemaSolare(int numPianeti) {
     if (numPianeti < 1) {
       throw new IllegalArgumentException("Numero di pianeti nullo o negativo");
@@ -13,6 +20,11 @@ public class SistemaSolare {
     pianetiPresenti = 0;
   }
 
+  /**
+   *
+   * @param p pianeta da inserire nel sistema solare
+   * @return true se l'inserimento è andato a buon fine
+   */
   public boolean nuovo(Pianeta p) {
     if (p == null || pianetiPresenti == pianeti.length) {
       return false;
@@ -35,14 +47,28 @@ public class SistemaSolare {
     return true;
   }
 
+  /**
+   *
+   * @return numero dei pianeti attualmente presenti nel sistema solare (alias di getNumero)
+   */
   public int getPianetiPresenti() {
     return pianetiPresenti;
   }
 
+  /**
+   *
+   * @return numero dei pianeti attualmente presenti nel sistema solare (alias di getPianetiPresenti)
+   */
   public int getNumero() {
     return pianetiPresenti;
   }
 
+  /**
+   *
+   * @param num numero ordinale del pianeta cercato;
+   *            se i pianeti presenti sono in numero inferiore, viene generata una eccezione
+   * @return restituisce il pianeta
+   */
   public Pianeta getPianeta(int num) {
     if (num < 0 || num > pianetiPresenti) {
       throw new IllegalArgumentException("Numero di pianeta negativo");
@@ -53,6 +79,10 @@ public class SistemaSolare {
     return pianeti[num];
   }
 
+  /**
+   *
+   * @return restituisce il pianeta più distante dalla stella o <i>null</i> se non sono presenti pianeti
+   */
   public Pianeta getMaxPianeta() {
     if (pianetiPresenti == 0) {
       return null;
@@ -72,11 +102,17 @@ public class SistemaSolare {
     Mi è chiaro che, in base a dove verrà utilizzato questo "pacchetto", potrà essere opportuno rimuoverlo
     per non appesantire il codice nel caso di ambienti con poca memoria.
    */
-  public String toString() {
-    return toString(80);
+
+  /**
+   *
+   * @return un testo multilinea con la rappresentazione grafica (testuale) del sistema solare
+   *          con la distanza tra i pianeti in scala a quella memorizzata nel sistema
+   */
+  public String toGraph() {
+    return toGraph(80);
   }
 
-  public String toString(int cols) {
+  public String toGraph(int cols) {
     cols -= pianeti[pianetiPresenti - 1].getNome().length();
     char[] chars = new char[cols];
     chars[0] = 'S';

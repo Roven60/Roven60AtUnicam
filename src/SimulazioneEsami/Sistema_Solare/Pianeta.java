@@ -1,5 +1,8 @@
 package SimulazioneEsami.Sistema_Solare;
 
+/**
+ * @author Roberto Venturi aka Roven60
+ */
 public class Pianeta {
 
   String nome;
@@ -7,6 +10,12 @@ public class Pianeta {
   double distanza;
 
 
+  /**
+   *
+   * @param nome  nome del pianeta
+   * @param massa massa del pianeta espressa in ???
+   * @param distanza distanza dalla stella espressa in ???
+   */
   public Pianeta(String nome, double massa, double distanza) {
     if (nome == null || nome.equals("")) {
       throw new IllegalArgumentException("Nome nullo");
