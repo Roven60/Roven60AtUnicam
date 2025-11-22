@@ -1,7 +1,15 @@
 package SimulazioneEsami.Visite_Mediche;
 
+import static SimulazioneEsami._lib.toTitleCase;
+
 public class Test {
   public static void main(String[] args) {
+
+    System.out.println("[" + toTitleCase("Aleksandra") + "]");
+    System.out.println("[" + toTitleCase("Aleksandra Elzbieta") + "]");
+    System.out.println("[" + toTitleCase(" Aleksandra   Elzbieta   ") + "]");
+
+
     Coda c = null;
     try {
       c = new Coda(-2);
@@ -29,6 +37,8 @@ public class Test {
     if (c.inserimento(v)) System.out.println("NO");
     else System.out.println("OK");
     System.out.println(c.cancellazione("Paolo", "Rossi") ? "OK" : "NO");
-
   }
+
+
+
 }
