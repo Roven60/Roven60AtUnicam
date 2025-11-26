@@ -30,6 +30,8 @@ import static java.lang.System.exit;
  * La logica di gioco del computer è esposta nel sito di Pier Giorgio Perotto (il suo creatore) con un emulatore
  * della P101 che utilizza i vari registri della P101. Qui ho provato a studiare il gioco ed estrapolare una mia
  * logica di gioco che potrebbe o meno assomigliare all'algoritmo originale.
+ *
+ * @author Roberto Venturi aka Roven60
  */
 public class AngelaGame {
 
@@ -44,15 +46,40 @@ public class AngelaGame {
           \r
           """;
   static int target = 0;
-  static int human = 0;
-  static int computer = 0;
+  static int human = -1;
+  static int computer = -1;
   static int progressive = 0;
-
+  static final int[][] goodMoves = {  //remaining and good move(s)
+      {16, 5, 4}, //OK
+      {15, 6, 3}, //OK
+      {14, 5, 6}, //5 OK, 6+3+1 = 3/4
+      {13, 4, 2}, //OK
+      {12, 4, 2}, //4 OK, 2+1 = 3/4
+      {11, 3, 2}, //OK
+      {10, 5, 1}, //OK
+      {9, 1},     //1 = 3/4
+      {8, 4},     //OK
+      {7, 6, 4},  //OK
+      {6, 6, 3},
+      {5, 5},
+      {4, 4},
+      {3, 3},
+      {2, 2, 1},
+      {1, 1},
+  };
 
   //****************//
   //*** ROUTINES ***//
   //****************//
 
+  /**
+   * Metodo che chiede un numero intero all'utente
+   *
+   * @param msg   messaggio da mostrare all'utente
+   * @param min   numero minimo accettabile
+   * @param max   numero massimo accettabile
+   * @return  il numero immesso dall'utente
+   */
   static int getIntInput(String msg, int min, int max) {
     String s1;
     int num = min - 1;
@@ -70,9 +97,9 @@ public class AngelaGame {
   }
 
   /**
-   * Method for getting target value from human
+   * Metodo che chiede all'utente il valore da usare come obiettivo
    *
-   * @return the target value
+   * @return il valore (intero) dell'obiettivo
    */
   static void getTarget() {
     while (target < 7 && target != -1) {
@@ -80,99 +107,72 @@ public class AngelaGame {
     }
   }
 
+  /**
+   * Metodo di comodo che fornisce la riga di intestazione
+   * @return  riga dell'intestazione del gioco
+   */
+  static String getHeaderRow() {
+    return "Hum.  CPU   Tot. ";
+  }
+
+  /**
+   * Metodo di comodo per formattare la riga di gioco
+   * @return  stringa di testo con le mosse e il parziale
+   */
   static String getProgressRow() {
     return String.format("%3s   %3s   %3s  ", human, computer, progressive);
   }
 
   /**
-   * Method to get human move
-   *
-   * @return human move
+   * Metodo che chiede all'utente il numero da giocare
    */
-  static boolean getHumanMove() {
+  static void getHumanMove() {
     String msg;
-    if (computer == 0)
-      msg = "                  Numero ";
-    else
+    if (computer == -1) { //first move
+      msg = "                  Numero (0 = passo)";
+      human = -1;
+      while (human < 0 || human > 6) {
+        human = getIntInput(msg, 0, 6);
+      }
+      System.out.println(getHeaderRow());
+      if (human == 0)
+        return;
+    } else {
       msg = String.format("%s numero (non %d ne %d)", getProgressRow(), computer, (7 - computer));
-    human = 0;
-    while (human < 1 || human > 7 || human == computer || human == (7 - computer)) {
-      human = getIntInput(msg, 1, 6);
+      human = 0;
+      while (human < 1 || human > 6 || human == computer || human == (7 - computer)) {
+        human = getIntInput(msg, 1, 6);
+      }
     }
     progressive += human;
-    if (progressive == target) {
-      System.out.println("*** Vabbè: hai Vinto. ***");
-      return true;
-    }
-    if (progressive > target) {
-      System.out.println("***** Ho vinto! *****");
-      return true;
-    }
-    return false;
   }
 
   /**
-   * Method to get computer move
-   *
-   * @return computer move
+   * Metodo che calcola il numero da giocare per il computer
    */
-  static boolean getComputerMove() {
+  static void getComputerMove() {
     computer = 0;
     int remaining = target - progressive;
-    switch (remaining) {
-      case 11:
-        if (human != 4 && human != 3)
-          computer = 4;
-        else
-          computer = 2;
+    // una ricerca binaria sarebbe più efficiente ma vale la pena?
+    for (int ii = 0; ii < goodMoves.length; ii++) {
+      if (goodMoves[ii][0] == remaining) {
+        if (human != goodMoves[ii][1] && human != (7 - goodMoves[ii][1]))
+          computer = goodMoves[ii][1];
+        else {
+          if (goodMoves[ii].length > 2)
+            computer = goodMoves[ii][2];
+        }
         break;
-      case 10:
-        if (human != 5 && human != 2)
-          computer = 5;
-        else
-          computer = 1;
-        break;
-      case 9: // vincita non sicura
-        if (human != 6 && human != 1)
-          computer = 1; //forse
-        else
-          computer = 2; //senza speranza
-        break;
-      case 8:
-        if (human != 4 && human != 3)
-          computer = 4;
-        else
-          computer = 1; //senza speranza
-        break;
-      case 7:
-        if (human != 6 && human != 1)
-          computer = 6;
-        else
-          computer = 1; //senza speranza
-        break;
-      case 6, 5, 4, 3, 2, 1:
-        if (human != remaining && human != (7 - remaining))
-          computer = remaining;
-        else
-          computer = 1; //senza speranza
+      }
     }
-    if (computer == 0) {  //non ancora definito (remaining > 11)
+    if (computer == 0) {  //non abbiamo mosse studiate: che fare?
       //TODO
-      if(human != 6 && human != 1 )
+      if (human != 6 && human != 1)
         computer = 1;
       else
         computer = 2;
     }
     progressive += computer;
-    if (progressive == target) {
-      System.out.println(getProgressRow() + "***** Ho vinto! *****");
-      return true;
-    }
-    if (progressive > target) {
-      System.out.println(getProgressRow() + "*** Vabbè: hai Vinto. ***");
-      return true;
-    }
-    return false;
   }
 
 
@@ -180,13 +180,25 @@ public class AngelaGame {
   static void main(String[] args) {
     System.out.println(INTRO);
     getTarget();
-    int human = 0;
-    int computer = 0;
     while (progressive < target) {
-      if (getHumanMove())
+      getHumanMove();
+      if (progressive == target) {
+        System.out.println("*** Vabbè: hai Vinto. ***");
         break;
-      if (getComputerMove())
+      }
+      if (progressive > target) {
+        System.out.println("***** Hai sballato ed io ho vinto! *****");
         break;
+      }
+      getComputerMove();
+      if (progressive == target) {
+        System.out.println(getProgressRow() + "***** Ho vinto! *****");
+        break;
+      }
+      if (progressive > target) {
+        System.out.println(getProgressRow() + "*** ho sballato: hai Vinto. ***");
+        break;
+      }
     }
   }
 
