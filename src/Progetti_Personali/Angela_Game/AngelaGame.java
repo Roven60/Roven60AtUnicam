@@ -50,6 +50,8 @@ public class AngelaGame {
   static int computer = -1;
   static int progressive = 0;
   static final int[][] goodMoves = {  //remaining and good move(s)
+      {18, 1, 4}, //1 OK, 4+3 = 3/4
+      {17, 4, 3}, //4 OK, 3+1 = 3/4
       {16, 5, 4}, //OK
       {15, 6, 3}, //OK
       {14, 5, 6}, //5 OK, 6+3+1 = 3/4
@@ -57,15 +59,15 @@ public class AngelaGame {
       {12, 4, 2}, //4 OK, 2+1 = 3/4
       {11, 3, 2}, //OK
       {10, 5, 1}, //OK
-      {9, 1},     //1 = 3/4
-      {8, 4},     //OK
+      {9, 3, 1},  //3+1 = 3/4
+      {8, 4, 3},  //4 OK, 3 = 2/3
       {7, 6, 4},  //OK
-      {6, 6, 3},
-      {5, 5},
-      {4, 4},
-      {3, 3},
-      {2, 2, 1},
-      {1, 1},
+      {6, 6, 3},  //OK
+      {5, 5, 2},  //5 OK, 2 = 1/2
+      {4, 4, 2},  //4 OK
+      {3, 3, 2},  //3 OK
+      {2, 2, 1},  //OK
+      {1, 1, 2},  //1 OK
   };
 
   //****************//
@@ -75,10 +77,10 @@ public class AngelaGame {
   /**
    * Metodo che chiede un numero intero all'utente
    *
-   * @param msg   messaggio da mostrare all'utente
-   * @param min   numero minimo accettabile
-   * @param max   numero massimo accettabile
-   * @return  il numero immesso dall'utente
+   * @param msg messaggio da mostrare all'utente
+   * @param min numero minimo accettabile
+   * @param max numero massimo accettabile
+   * @return il numero immesso dall'utente
    */
   static int getIntInput(String msg, int min, int max) {
     String s1;
@@ -109,7 +111,8 @@ public class AngelaGame {
 
   /**
    * Metodo di comodo che fornisce la riga di intestazione
-   * @return  riga dell'intestazione del gioco
+   *
+   * @return riga dell'intestazione del gioco
    */
   static String getHeaderRow() {
     return "Hum.  CPU   Tot. ";
@@ -117,7 +120,8 @@ public class AngelaGame {
 
   /**
    * Metodo di comodo per formattare la riga di gioco
-   * @return  stringa di testo con le mosse e il parziale
+   *
+   * @return stringa di testo con le mosse e il parziale
    */
   static String getProgressRow() {
     return String.format("%3s   %3s   %3s  ", human, computer, progressive);
