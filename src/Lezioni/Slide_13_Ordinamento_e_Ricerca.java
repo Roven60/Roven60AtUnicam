@@ -2,7 +2,7 @@ package Lezioni;
 
 import java.util.Arrays;
 
-public class Cap_12_Ordinamento_e_Ricerca {
+public class Slide_13_Ordinamento_e_Ricerca {
 
   public static int ricercaBinariaRV(int[] a, int x) {
     int i = 1;  //Mancante nella lezione: non compilava
@@ -86,7 +86,7 @@ public class Cap_12_Ordinamento_e_Ricerca {
 
   // merge two CONSECUTIVE parts of array a (from, middle) + (middle + 1, to)
   public static void mergeRV(int[] a, int from, int middle, int to) {
-    //System.out.println("   (mergeRV(" + Arrays.toString(a) + ", " + from + ", " + middle + ", " + to + ")");
+    //StdOut.println("   (mergeRV(" + Arrays.toString(a) + ", " + from + ", " + middle + ", " + to + ")");
     int[] c = new int[to - from + 1];
     int ic = 0;
     int ia = from;
@@ -107,7 +107,7 @@ public class Cap_12_Ordinamento_e_Ricerca {
   }
 
   public static void mergeSortRV(int[] a, int from, int to) {
-    //System.out.println("(mergeSortRV(" + Arrays.toString(a) + ", " + from + ", " + to + ")");
+    //StdOut.println("(mergeSortRV(" + Arrays.toString(a) + ", " + from + ", " + to + ")");
     if (from < to) {
       int idx = (to + from) / 2;
       mergeSortRV(a, from, idx);
@@ -180,47 +180,47 @@ public class Cap_12_Ordinamento_e_Ricerca {
 
   static void searchTest() {
     int[] a0 = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31};
-    System.out.println(Arrays.toString(a0) + "   4 => " + ricercaBinariaRV(a0, 4));
-    System.out.println(Arrays.toString(a0) + "  11 => " + ricercaBinariaRV(a0, 11));
-    System.out.println(Arrays.toString(a0) + "  34 => " + ricercaBinariaRV(a0, 34));
-    System.out.println(Arrays.toString(a0) + "  17 => " + ricercaBinariaRV(a0, 17));
-    System.out.println(Arrays.toString(a0) + "   1 => " + ricercaBinariaRV(a0, 1));
+    StdOut.println(Arrays.toString(a0) + "   4 => " + ricercaBinariaRV(a0, 4));
+    StdOut.println(Arrays.toString(a0) + "  11 => " + ricercaBinariaRV(a0, 11));
+    StdOut.println(Arrays.toString(a0) + "  34 => " + ricercaBinariaRV(a0, 34));
+    StdOut.println(Arrays.toString(a0) + "  17 => " + ricercaBinariaRV(a0, 17));
+    StdOut.println(Arrays.toString(a0) + "   1 => " + ricercaBinariaRV(a0, 1));
   }
 
   static void sortTest() {
     int[] a1 = {3, 2, 1, 9, 5, 6, 4, 8, 7};
-    System.out.println(Arrays.toString(a1));
-    System.out.println(Arrays.toString(insertionSort(a1)));
+    StdOut.println(Arrays.toString(a1));
+    StdOut.println(Arrays.toString(insertionSort(a1)));
 
-    System.out.println("-----");
-    System.out.println(Arrays.toString(a1));
+    StdOut.println("-----");
+    StdOut.println(Arrays.toString(a1));
     selectionSort(a1);
-    System.out.println(Arrays.toString(a1));
+    StdOut.println(Arrays.toString(a1));
 
-    System.out.println("-----");
+    StdOut.println("-----");
     int[] a2 = {1, 3, 4, 9};
     int[] a3 = {2, 5, 6, 7, 8};
-    System.out.println(Arrays.toString(a2) + "   +   " + Arrays.toString(a3));
-    System.out.println(Arrays.toString(merge(a2, a3)));
+    StdOut.println(Arrays.toString(a2) + "   +   " + Arrays.toString(a3));
+    StdOut.println(Arrays.toString(merge(a2, a3)));
   }
 
   static void mergeRV_mergeSortRV_Test() {
-    System.out.println("-----");
+    StdOut.println("-----");
     int[] a4 = {0, 1, 2, 7, 9, 3, 4, 5, 6, 8};
-    System.out.println(Arrays.toString(a4));
+    StdOut.println(Arrays.toString(a4));
     mergeRV(a4, 0, 4, 9);
-    System.out.println(Arrays.toString(a4) + " with mergeRV(a, 0, 4, 9)");
+    StdOut.println(Arrays.toString(a4) + " with mergeRV(a, 0, 4, 9)");
 
-    System.out.println("-----");
+    StdOut.println("-----");
     int[] a5 = {3, 2, 1, 9, 5, 6, 4, 8, 7};
-    System.out.println(Arrays.toString(a5));
+    StdOut.println(Arrays.toString(a5));
     mergeSortRV(a5);
-    System.out.println(Arrays.toString(a5) + " with mergeSortRV(a)");
+    StdOut.println(Arrays.toString(a5) + " with mergeSortRV(a)");
   }
 
   public static void timingTest() {
     final int COUNT = 100000;
-    System.out.println("----- " +COUNT + " SORT TIMING -----");
+    StdOut.println("----- " +COUNT + " SORT TIMING -----");
     double tStart;
     int[] original = {3, 2, 1, 9, 5, 6, 4, 8, 7};
     int[] work = null, work2 = null;
@@ -230,27 +230,27 @@ public class Cap_12_Ordinamento_e_Ricerca {
       work = Arrays.copyOf(original, original.length);
       work2 = insertionSort(work);
     }
-    System.out.println(Arrays.toString(work2) + "   INSERTION time " + (System.currentTimeMillis() - tStart));
+    StdOut.println(Arrays.toString(work2) + "   INSERTION time " + (System.currentTimeMillis() - tStart));
     //--- SELECTION SORT ---
     tStart = System.currentTimeMillis();
     for (int round = 0; round < COUNT; round++) {
       work = Arrays.copyOf(original, original.length);
       selectionSort(work);
     }
-    System.out.println(Arrays.toString(work) + "   SELECTION time " + (System.currentTimeMillis() - tStart));
+    StdOut.println(Arrays.toString(work) + "   SELECTION time " + (System.currentTimeMillis() - tStart));
     //--- MERGE SORT ---
     tStart = System.currentTimeMillis();
     for (int round = 0; round < COUNT; round++) {
       work = Arrays.copyOf(original, original.length);
       mergeSortRV(work);
     }
-    System.out.println(Arrays.toString(work) + "   MERGE time " + (System.currentTimeMillis() - tStart));
+    StdOut.println(Arrays.toString(work) + "   MERGE time " + (System.currentTimeMillis() - tStart));
 
   }
 
   public void main(String args[]) {
-    //searchTest(); System.out.println("-----");
-    //sortTest(); System.out.println("-----");
+    //searchTest(); StdOut.println("-----");
+    //sortTest(); StdOut.println("-----");
     mergeRV_mergeSortRV_Test();
     //timingTest();
 

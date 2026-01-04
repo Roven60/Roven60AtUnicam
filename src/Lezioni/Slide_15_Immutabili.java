@@ -1,6 +1,6 @@
 package Lezioni;
 
-public class Cap_14_Immutabili {
+public class Slide_15_Immutabili {
 
   public static class Rational {
     private int numerator;
@@ -84,9 +84,9 @@ public class Cap_14_Immutabili {
     }
 
     public int compare(Rational x) {
-      if (x.to_double() < this.to_double())
+      if (this.to_double() < x.to_double())
         return -1;
-      if (x.to_double() == this.to_double())
+      if (this.to_double() == x.to_double())
         return 0;
       return 1;
     }
@@ -107,13 +107,14 @@ public class Cap_14_Immutabili {
   static void main(String[] args) {
     Rational a = new Rational(1, 2); // 1/2 Rational
     Rational b = new Rational(2, 3);// 2/3
-    System.out.println("A + B = " + a.add(b));
-    System.out.println("A - B = " + a.sub(b));
-    System.out.println("A * B = " + a.mul(b));
-    System.out.println("A / B = " + a.div(b));
-
+    StdOut.println("A = " + a + "   b = " + b );
+    StdOut.println("A + B = " + a.add(b));
+    StdOut.println("A - B = " + a.sub(b));
+    StdOut.println("A * B = " + a.mul(b));
+    StdOut.println("A / B = " + a.div(b));
+    StdOut.println("a.compare(B) = " + a.compare(b));
     b = new Rational(3, 9);
-    System.out.println("symplify(" + b.toString() + ") = " + b.simplify());
+    StdOut.println("symplify(" + b.toString() + ") = " + b.simplify());
 
   }
 

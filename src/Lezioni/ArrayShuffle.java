@@ -4,9 +4,9 @@ public class ArrayShuffle {
 
     public static void PrintArray(int[] nums) {
         for (int i = 0; i < nums.length; i++) {
-            System.out.print(nums[i] + " ");
+            StdOut.print(nums[i] + " ");
         }
-        System.out.println();
+        StdOut.println();
     }
 
     public static void ArrayShuffle(int[] nums) {

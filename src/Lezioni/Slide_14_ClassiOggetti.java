@@ -1,6 +1,6 @@
 package Lezioni;
 
-public class Cap_13_ClassiOggetti {
+public class Slide_14_ClassiOggetti {
 
   public static class Orologio {
     int ore = 0;
@@ -41,10 +41,10 @@ public class Cap_13_ClassiOggetti {
     private int contenuto;  // 0 <= contenuto <= volume ...
     private boolean aperto;
 
-    public Recipiente(int quantita) { // quantita >= 0
-      volume = quantita;
-      contenuto = 0;
-      aperto = false;
+    public Recipiente(int volume) { // quantita >= 0
+      this.volume = volume;
+      this.contenuto = 0;
+      this.aperto = false;
     }
 
     public int get_volume() {
@@ -78,6 +78,11 @@ public class Cap_13_ClassiOggetti {
     }
   }  //Recipiente End
 
+  /**
+   * Dopo 38 anni da bancario :-D mi è venuto spontaneo,
+   * in mancanza di un fido, limitare il prelievo al saldo
+   * e ritornare il valore prelevato (che può essere inferiore al richiesto).
+   */
   public static class ContoCorrente {
     private int saldo;
     private int saldoMax;
@@ -119,6 +124,7 @@ public class Cap_13_ClassiOggetti {
       for (int i = current + 1; i < Integer.MAX_VALUE; i++) {
         if (this.isPrime(i)) {
           current = i;
+          break;
         }  //else try next integer
       }
       //all primes < MAX_VALUE returned: what to do?
@@ -126,10 +132,12 @@ public class Cap_13_ClassiOggetti {
     }
 
     private boolean isPrime(int number) {
-      int i;
-      for (i = 2; i <= number / i; i++)
-        if (number % i == 0) break;
-      return (i > number / i);
+      for (int i = 2; i <= number / 2; i++) {
+        if (number % i == 0) {
+          return false;
+        }
+      }
+      return true;
     }
 
   } //Primes End
@@ -138,30 +146,30 @@ public class Cap_13_ClassiOggetti {
   static void main(String[] args) {
     StdOut.println("===== OROLOGIO =====");
     Orologio o1 = new Orologio(20, 58);
-    StdOut.println("Ore " + o1.get_ora() + ":" + o1.get_minuti());
+    StdOut.println("        Ore " + o1.get_ora() + ":" + o1.get_minuti());
     o1.tick();
-    StdOut.println("Ore " + o1.get_ora() + ":" + o1.get_minuti());
+    StdOut.println("tick => Ore " + o1.get_ora() + ":" + o1.get_minuti());
     o1.tick();
-    StdOut.println("Ore " + o1.get_ora() + ":" + o1.get_minuti());
+    StdOut.println("tick => Ore " + o1.get_ora() + ":" + o1.get_minuti());
     StdOut.println("===== RECIPIENTE =====");
     Recipiente r1 = new Recipiente(10);
-    StdOut.println("Capacità " + r1.capacita());
+    StdOut.println("Nuovo recipiente(10) => Capacità " + r1.capacita());
     r1.aggiungi(4);
-    StdOut.println("Capacità " + r1.capacita());
+    StdOut.println("Aggiungi(4) => Capacità " + r1.capacita());
     r1.apri();
     r1.aggiungi(4);
-    StdOut.println("Capacità " + r1.capacita());
+    StdOut.println("Apri() + Aggiungi(4) => Capacità " + r1.capacita());
     StdOut.println("===== CONTO CORRENTE =====");
     ContoCorrente cc1 = new ContoCorrente(20);
-    StdOut.println("Saldo " + cc1.get_saldo() + " (max " + cc1.get_saldoMax() +")");
+    StdOut.println("new Conto(20) => Saldo " + cc1.get_saldo() + " (max " + cc1.get_saldoMax() +")");
     cc1.deposita(2);
-    StdOut.println("Saldo " + cc1.get_saldo() + " (max " + cc1.get_saldoMax() +")");
+    StdOut.println("deposita(2) => Saldo " + cc1.get_saldo() + " (max " + cc1.get_saldoMax() +")");
     cc1.deposita(8);
-    StdOut.println("Saldo " + cc1.get_saldo() + " (max " + cc1.get_saldoMax() +")");
+    StdOut.println("deposita(8) => Saldo " + cc1.get_saldo() + " (max " + cc1.get_saldoMax() +")");
     int contante = cc1.preleva(18);
-    StdOut.println("Saldo " + cc1.get_saldo() + " (max " + cc1.get_saldoMax() +") contante " + contante);
+    StdOut.println("preleva(18) => Saldo " + cc1.get_saldo() + " (max " + cc1.get_saldoMax() +") contante " + contante);
     contante = cc1.preleva(18);
-    StdOut.println("Saldo " + cc1.get_saldo() + " (max " + cc1.get_saldoMax() +") contante " + contante);
+    StdOut.println("preleva(18) => Saldo " + cc1.get_saldo() + " (max " + cc1.get_saldoMax() +") contante " + contante);
     StdOut.println("===== PRIMES =====");
     Primes p1 = new Primes();
     for (int i = 0; i < 10; i++) {

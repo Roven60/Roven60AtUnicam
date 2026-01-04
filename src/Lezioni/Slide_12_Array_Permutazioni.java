@@ -2,7 +2,7 @@ package Lezioni;
 
 import java.util.Arrays;
 
-public class Cap_12_Permutazioni {
+public class Slide_12_Array_Permutazioni {
 
   //Scritta dal prof durante la lezione: necessito della registrazione per riscriverla
   public static int[] aggiungiElemento(int[] a, int j, int v) {
@@ -84,14 +84,14 @@ public class Cap_12_Permutazioni {
   static void main(String[] args) {
     int[][] r1 = permutazioniIndice(3);
     for (int i = 0; i < r1.length; i++) {
-      System.out.println(Arrays.toString(r1[i]));
+      StdOut.println(Arrays.toString(r1[i]));
     }
 
-    System.out.println("=====");
+    StdOut.println("=====");
     int[] r2 = {15, -37, 21};
     int[][] r3 = permutazioniContenuto(r2);
     for (int i = 0; i < r3.length; i++) {
-      System.out.println(Arrays.toString(r3[i]));
+      StdOut.println(Arrays.toString(r3[i]));
     }
   }
 
