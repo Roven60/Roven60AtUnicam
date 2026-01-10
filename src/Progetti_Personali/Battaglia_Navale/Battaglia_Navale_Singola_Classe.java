@@ -1,7 +1,20 @@
 package Progetti_Personali.Battaglia_Navale;
 
+import java.util.Locale;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
+/**
+ * This class implements the BattleShip game between human and computer;
+ * both them plays at the same time (every turn)
+ * <p>
+ * You can simply "run" and enjoy the game or change some parameter (first 5 {@code final} rows)
+ * and study the game logic. Sorry: texts are in italian.
+ *
+ * @author Roberto Venturi - Unicam student - accademic year 2025/26
+ *
+ */
 public class Battaglia_Navale_Singola_Classe {
 
   static final int SIZE = 10;  // Grid size (personalizable)
@@ -97,8 +110,7 @@ public class Battaglia_Navale_Singola_Classe {
     if (col > 0 && sea[row][col - 1] == SHIP) { //touching ship left
       return true;
     }
-    //touching ship right
-    return col < SIZE - 1 && sea[row][col + 1] == SHIP;
+    return col < SIZE - 1 && sea[row][col + 1] == SHIP; //touching ship right
   }
 
   /*** return true if there is a ship in the cell up or down of given row, col ***/
@@ -106,13 +118,11 @@ public class Battaglia_Navale_Singola_Classe {
     if (row > 0 && sea[row - 1][col] == SHIP) { //touching ship top
       return true;
     }
-    //touching ship down
-    return row < SIZE - 1 && sea[row + 1][col] == SHIP;
+    return row < SIZE - 1 && sea[row + 1][col] == SHIP; //touching ship down
   }
 
   /*** try to put a ship of given length in mySea starting at row, col moving UP  ***/
   static boolean tryToPutShipUp(int row, int col, int shipLen) {
-    //---Try to put ship vertical UP ---//
     if (row < SIZE - 1 && mySea[row + 1][col] == SHIP) {
       return false;  //there is a touching ship just 1 cell down
     }
@@ -134,7 +144,6 @@ public class Battaglia_Navale_Singola_Classe {
 
   /*** try to put a ship of given length in mySea starting at row, col moving DOWN  ***/
   static boolean tryToPutShipDown(int row, int col, int shipLen) {
-    //--- Try to put ship vertical DOWN
     if (row > 0 && mySea[row - 1][col] == SHIP) {
       return false;  //there is a touching ship just1 cell up
     }
@@ -156,7 +165,6 @@ public class Battaglia_Navale_Singola_Classe {
 
   /*** try to put a ship of given length in mySea starting at row, col moving LEFT  ***/
   static boolean tryToPutShipLeft(int row, int col, int shipLen) {
-    //--- Try to put ship horizontal LEFT
     if (col < SIZE - 1 && mySea[row][col + 1] == SHIP) {
       return false;  //there is a touching ship just right
     }
@@ -178,7 +186,6 @@ public class Battaglia_Navale_Singola_Classe {
 
   /*** try to put a ship of given length in mySea starting at row, col moving RIGHT  ***/
   static boolean tryToPutShipRight(int row, int col, int shipLen) {
-    //--- Try to put ship horizontal RIGHT
     if (col > 0 && mySea[row][col - 1] == SHIP) {
       return false;  //there is a touching ship just left
     }
@@ -209,7 +216,7 @@ public class Battaglia_Navale_Singola_Classe {
     } while (mySea[row][col] != EMPTY);
     //--- Choose a causal direction to follow ---//
     if (Math.random() < 0.5) {  // vertical / horizontal
-      if (Math.random() < 0.5) {
+      if (Math.random() < 0.5) {  // Try to put ship vertical
         if (!tryToPutShipUp(row, col, shipLen)) return false;
       } else {
         if (!tryToPutShipDown(row, col, shipLen)) return false;
@@ -363,7 +370,7 @@ public class Battaglia_Navale_Singola_Classe {
     }
   }
 
-  /*** all current ship hit: clea up the scanning system ***/
+  /*** all current ship hit: clean up the scanning system ***/
   static void shipSunk() {
     println("Ho affondato una nave da " + shipSize + "!");
     shipSize = 0;
@@ -387,7 +394,7 @@ public class Battaglia_Navale_Singola_Classe {
   }
 
 
-  /*** Scans for while ship after a successful hit. Try left ***/
+  /*** Scans for whole ship after a successful hit. Try left ***/
   static void scanLeft() {
     if (DEBUGMODE) print("Scanning LEFT   ");
     //--- scan LEFT
@@ -405,7 +412,7 @@ public class Battaglia_Navale_Singola_Classe {
     }
   }
 
-  /*** Scans for while ship after a successful hit. Try right ***/
+  /*** Scans for whole ship after a successful hit. Try right ***/
   static void scanRight() {
     if (DEBUGMODE) print("Scanning RIGHT   ");
     if (myCol == SIZE - 1 || yourSea[myRow][myCol + 1] != EMPTY) {
@@ -432,7 +439,7 @@ public class Battaglia_Navale_Singola_Classe {
     }
   }
 
-  /*** Scans for while ship after a successful hit. Try up ***/
+  /*** Scans for whole ship after a successful hit. Try up ***/
   static void scanUp() {
     if (DEBUGMODE) print("Scanning UP   ");
     if (myRow == 0 || yourSea[myRow - 1][myCol] != EMPTY) {
@@ -450,7 +457,7 @@ public class Battaglia_Navale_Singola_Classe {
 
   }
 
-  /*** Scans for while ship after a successful hit. Try down ***/
+  /*** Scans for whole ship after a successful hit. Try down ***/
   static void scanDown() {
     if (DEBUGMODE) print("Scanning DOWN   ");
     if (myRow == SIZE - 1 || yourSea[myRow + 1][myCol] != EMPTY) {
@@ -472,15 +479,21 @@ public class Battaglia_Navale_Singola_Classe {
       return;
     }
     //After a hit scans for the whole ship trying Left, Right, Up and Down.
-    // TODO: random will be better
-    if (scanDir == 'L')
-      scanLeft();
-    else if (scanDir == 'R')
-      scanRight();
-    else if (scanDir == 'U')
-      scanUp();
-    else if (scanDir == 'D')
-      scanDown();
+    // TODO: random direction will be better?
+    switch (scanDir) {
+      case 'L':
+        scanLeft();
+        break;
+      case 'R':
+        scanRight();
+        break;
+      case 'U':
+        scanUp();
+        break;
+      case 'D':
+        scanDown();
+        break;
+    }
   }
 
   /*** return true if all computer's or human's ship are hit ***/
