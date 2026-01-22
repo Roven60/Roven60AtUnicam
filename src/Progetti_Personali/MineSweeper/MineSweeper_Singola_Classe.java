@@ -6,6 +6,9 @@ import java.util.Scanner;
 public class MineSweeper_Singola_Classe {
   static final int ATO0 = 17;
   static final char BOMB = '*';
+  static final int LVLGAME = 0;
+  static final int LVLSHOW = 1;
+  static final int LVLDEBUG = 2;
 
   static int ROWS = 10;
   static int COLS = 10;
@@ -89,7 +92,7 @@ public class MineSweeper_Singola_Classe {
     println('+');
   }
 
-  static void printField(boolean debugMode) {
+  static void printField(int level) {
     print(ROWS > 10 ? "   " : "  ");
     if (COLS > 10)
       for (int col = 1; col <= COLS; col++) {
@@ -106,20 +109,24 @@ public class MineSweeper_Singola_Classe {
     println();
     printHBorder();
     for (int row = 0; row < ROWS; row++) {
-      if (row + 1 >= 10)
-        print((int) ((row + 1) / 10));
-      else
-        print(' ');
+      if (ROWS > 10) {
+        if (row + 1 >= 10)
+          print((int) ((row + 1) / 10));
+        else
+          print(' ');
+      }
       print((int) (row + 1) % 10);
       print('|');
       for (int col = 0; col < COLS; col++) {
-        if (debugMode) {
+        if (level == LVLDEBUG) {
           print(field[row][col]);
         } else if (field[row][col] == '0' + ATO0) {
           print(' ');
         } else if (field[row][col] > '9') {
           print((char) (field[row][col] - ATO0));
-        } else
+        } else if (field[row][col] == BOMB && level == LVLSHOW)
+          print('*');
+        else
           print('.');
       }
       println('|');
@@ -211,7 +218,8 @@ public class MineSweeper_Singola_Classe {
   }
 
   static void clearAround(int row, int col) {
-    clearCell(row, col);
+    if (clearCell(row, col))
+      clearAround(row, col);
     if (clearCell(row - 1, col - 1))
       clearAround(row - 1, col - 1);
     if (clearCell(row - 1, col))
@@ -233,19 +241,20 @@ public class MineSweeper_Singola_Classe {
   static void main() {
     settings();
     putMines();
-    //printField(true); //for debug only!!!
+    //printField(LVLDEBUG); //for debug only!!!
     evaluateField();
-    printField(true); //for debug only!!!
+    //printField(LVLDEBUG); //for debug only!!!
     println();
     while (true) {
-      printField(false); //for debug only!!!
+      printField(LVLGAME);
       getHumanMove();
       if (field[usrRow][usrCol] == BOMB) {
         println("Mina colpita!");
+        printField(LVLSHOW);
         break;
       }
-      //clearCell(usrRow, usrCol);
-      clearAround(usrRow, usrCol);
+      if (clearCell(usrRow, usrCol))
+        clearAround(usrRow, usrCol);
     }
   }
 }
