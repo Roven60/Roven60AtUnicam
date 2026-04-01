@@ -39,9 +39,7 @@ public class Biblioteca {
   public boolean prestaLibro(String titolo, String autore) {
     Libro libro = new Libro(titolo, autore); //throws exception for titolo or autore not valid
     for (int i = 0; i < libriPresenti; i++) {
-      if (titolo.equals(libri[i].getTitolo())
-          && autore.equals(libri[i].getAutore())
-          && prestati[i] == false) {
+      if (libro.equals(libri[i]) && !prestati[i]) {
         prestati[i] = true;
         return true;
       }
@@ -54,9 +52,7 @@ public class Biblioteca {
     if (giorniDiRitardo < 0)
       throw new IllegalArgumentException("giorniDiRitardo<0");
     for (int i = 0; i < libriPresenti; i++) {
-      if (titolo.equals(libri[i].getTitolo())
-          && autore.equals(libri[i].getAutore())
-          && prestati[i] == true) {
+      if (libro.equals(libri[i]) && prestati[i] == true) {
         prestati[i] = false;
         return mora * giorniDiRitardo;
       }

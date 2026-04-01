@@ -20,6 +20,7 @@ public class Cavallo {
     if (numeroVittorie < 0)
       throw new IllegalArgumentException("Cavallo: numeroVittorie negativo");
     if (numeroPartecipazioni < 0)
+
       throw new IllegalArgumentException("Cavallo: numeroPartecipazioni negativo");
      */
     this.nome = nome;
@@ -67,6 +68,7 @@ public class Cavallo {
       return true;
     if (!(o instanceof Cavallo))
       return false;
+    // Nella soluzione vi è un test sui nomi null ma non può esistere l'oggetto Cavallo con nome null
     return this.nome.equals(((Cavallo) o).nome);
   }
 

@@ -1,5 +1,7 @@
 package SimulazioneEsami.Biblioteca;
 
+import java.util.Objects;
+
 public class Libro {
   String titolo;
   String autore;
@@ -28,7 +30,8 @@ public class Libro {
     if (o == null || getClass() != o.getClass())
       return false;
     Libro libro = (Libro) o;
-    return (titolo == libro.titolo && autore == libro.autore);
+    //ATTENZIONE: titolo == libro.titolo confronta se le stringhe sono lo stesso oggetto, non se hanno lo stesso contenuto!!!
+    return (titolo.equals(libro.titolo) && autore.equals(libro.autore));
   }
 
 }

@@ -1,14 +1,7 @@
 package SimulazioneEsami.Visite_Mediche;
 
-import static SimulazioneEsami._lib.toTitleCase;
-
 public class Test {
   public static void main(String[] args) {
-
-    System.out.println("[" + toTitleCase("Aleksandra") + "]");
-    System.out.println("[" + toTitleCase("Aleksandra Elzbieta") + "]");
-    System.out.println("[" + toTitleCase(" Aleksandra   Elzbieta   ") + "]");
-
 
     Coda c = null;
     try {

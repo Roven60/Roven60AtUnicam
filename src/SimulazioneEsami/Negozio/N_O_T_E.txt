@@ -1,0 +1,10 @@
+Definisci una classe Negozio
+Ogni oggetto negozio avrà un Id, Nome, Conto, ed un array di prodotti
+
+Definisci una classe Prodotto
+Ongi prodotto avrà un Id, nome, prezzo, costo (prezzo > costo)
+
+Decidi quali attribiti implementare Getter e Setter
+
+Aggiungi contyrolli, lancia eccezioni...
+Sovrascrivi i metodi toString() e equals()

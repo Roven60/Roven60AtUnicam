@@ -1,0 +1,19 @@
+Si vuole realizzare il programma per la gestione di una ferramenta.
+La ferramenta ha un CATALOGO unico. (ARTICOLO)
+La ferramenta gestisce:
+- LAMPADINA ("watt")
+- VERNICE ("litri")
+- CHIODO ("lunghezza")
+TUTTI hanno "prezzo unitario" e "quantità".
+Si vuole calcolare il valore() complessivo del magazzino.
+Si vuole realizzare le operazioni di caricamento() e vendita()
+
+---------------------------------------
+NOTE:
+Istruzioni non molto chiare; probabilmente l'esercizio è stato spiegato
+durante la lezione.
+- supponendo di dover usare solo Array (una lista sarebbe più utile),
+  quanto deve essere grande il catalogo?
+- gli attributi dei vari articolo (Es. il wattaggio della lampadina) a cosa servono?
+  ipotizzo ad avere tante istanze diverse per ogni articolo
+  (lampadine da 30W, 40W, 60 W, ...)
